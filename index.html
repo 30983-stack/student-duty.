@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดเวรนักเรียน</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat h3 {
+            font-size: 28px;
+            margin-top: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        th {
+            background: #eff6ff;
+        }
+
+        .waiting {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .danger {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>🏫 ระบบจัดเวรนักเรียน</h1>
+        <p>ระบบจัดเวรและหัวหน้าเวรตรวจสอบการปฏิบัติงาน</p>
+    </div>
+
+    <div class="container">
+
+        <div class="stats">
+
+            <div class="stat">
+                <p>👨‍🎓 นักเรียนทั้งหมด</p>
+                <h3 id="totalStudents">0</h3>
+            </div>
+
+            <div class="stat">
+                <p>✅ ทำเวรแล้ว</p>
+                <h3 id="completed">0</h3>
+            </div>
+
+            <div class="stat">
+                <p>⏳ รอตรวจสอบ</p>
+                <h3 id="waiting">0</h3>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>📋 ตารางเวรประจำวัน</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>วันที่</th>
+                        <th>นักเรียน</th>
+                        <th>หน้าที่</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+
+                <tbody id="dutyTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const duties = [
+            {
+                date: "23/09/2026",
+                student: "นักเรียนตัวอย่าง 1",
+                task: "กวาดห้อง",
+                status: "waiting"
+            },
+            {
+                date: "23/09/2026",
+                student: "นักเรียนตัวอย่าง 2",
+                task: "ถูพื้น",
+                status: "completed"
+            },
+            {
+                date: "23/09/2026",
+                student: "นักเรียนตัวอย่าง 3",
+                task: "เก็บขยะ",
+                status: "waiting"
+            }
+        ];
+
+        function renderDuty() {
+
+            const table = document.getElementById("dutyTable");
+
+            table.innerHTML = "";
+
+            let completed = 0;
+            let waiting = 0;
+
+            duties.forEach(function(duty) {
+
+                let statusText = "";
+
+                if (duty.status === "completed") {
+                    statusText = '<span class="success">✓ ทำแล้ว</span>';
+                    completed++;
+                }
+
+                else if (duty.status === "waiting") {
+                    statusText = '<span class="waiting">⏳ รอตรวจสอบ</span>';
+                    waiting++;
+                }
+
+                else {
+                    statusText = '<span class="danger">✗ ไม่ทำ</span>';
+                }
+
+                table.innerHTML += `
+                    <tr>
+                        <td>${duty.date}</td>
+                        <td>${duty.student}</td>
+                        <td>${duty.task}</td>
+                        <td>${statusText}</td>
+                    </tr>
+                `;
+
+            });
+
+            document.getElementById("totalStudents").textContent = duties.length;
+            document.getElementById("completed").textContent = completed;
+            document.getElementById("waiting").textContent = waiting;
+        }
+
+        renderDuty();
+
+    </script>
+
+</body>
+</html>
