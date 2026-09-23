@@ -1,250 +1,1263 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดเวรนักเรียน</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบจัดเวรนักเรียน</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
 
-        body {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
+body{
+    background:#eef2ff;
+    color:#1e293b;
+}
 
-        .header {
-            background: #2563eb;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+.hidden{
+    display:none!important;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 20px;
-        }
+button{
+    border:0;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
 
-        h1 {
-            margin-bottom: 8px;
-        }
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    text-align:center;
+}
 
-        h2 {
-            margin-bottom: 15px;
-        }
+.logo{
+    font-size:55px;
+    margin-bottom:10px;
+}
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+.login-box h1{
+    margin-bottom:8px;
+}
 
-        .stat {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+.login-box p{
+    color:#64748b;
+    margin-bottom:25px;
+}
 
-        .stat h3 {
-            font-size: 28px;
-            margin-top: 8px;
-        }
+.roles{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.role-btn{
+    flex:1;
+    background:#e2e8f0;
+    color:#334155;
+}
 
-        th, td {
-            padding: 14px;
-            border-bottom: 1px solid #e2e8f0;
-            text-align: center;
-        }
+.role-btn.active{
+    background:#2563eb;
+    color:white;
+}
 
-        th {
-            background: #eff6ff;
-        }
+.input{
+    width:100%;
+    padding:14px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    margin-bottom:12px;
+    font-size:16px;
+}
 
-        .waiting {
-            color: #d97706;
-            font-weight: bold;
-        }
+.login-btn{
+    width:100%;
+    background:#2563eb;
+    color:white;
+}
 
-        .success {
-            color: #16a34a;
-            font-weight: bold;
-        }
+.demo{
+    margin-top:18px;
+    padding:12px;
+    background:#f1f5f9;
+    border-radius:10px;
+    font-size:13px;
+    text-align:left;
+}
 
-        .danger {
-            color: #dc2626;
-            font-weight: bold;
-        }
+.app{
+    min-height:100vh;
+}
 
-        button {
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #2563eb;
-            color: white;
-            font-size: 15px;
-        }
+.header{
+    background:#1e3a8a;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-        button:hover {
-            background: #1d4ed8;
-        }
+.header button{
+    background:#ef4444;
+    color:white;
+}
 
-        @media (max-width: 700px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px;
+}
 
-            table {
-                font-size: 13px;
-            }
-        }
-    </style>
+.welcome{
+    margin-bottom:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.card h2{
+    margin-bottom:8px;
+}
+
+.number{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.blue{color:#2563eb}
+.green{color:#16a34a}
+.red{color:#dc2626}
+.orange{color:#d97706}
+
+.menu{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.menu button{
+    background:white;
+    color:#1e293b;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.menu button.active{
+    background:#2563eb;
+    color:white;
+}
+
+.section{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:center;
+}
+
+th{
+    background:#eff6ff;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.waiting{
+    color:#d97706;
+}
+
+.done{
+    color:#16a34a;
+}
+
+.notdone{
+    color:#dc2626;
+}
+
+.action{
+    background:#2563eb;
+    color:white;
+    margin:3px;
+}
+
+.danger-btn{
+    background:#dc2626;
+    color:white;
+    margin:3px;
+}
+
+.success-btn{
+    background:#16a34a;
+    color:white;
+    margin:3px;
+}
+
+.gray-btn{
+    background:#64748b;
+    color:white;
+    margin:3px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+select,.text-input{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+}
+
+.notice{
+    padding:15px;
+    background:#fff7ed;
+    border-left:5px solid #f97316;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.history-item{
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+@media(max-width:850px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .header{
+        flex-direction:column;
+        gap:12px;
+        text-align:center;
+    }
+
+    table{
+        font-size:13px;
+    }
+}
+
+@media(max-width:550px){
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .roles{
+        flex-direction:column;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .section{
+        overflow-x:auto;
+    }
+}
+</style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
+<div id="loginPage" class="login-page">
+
+    <div class="login-box">
+
+        <div class="logo">🏫</div>
+
+        <h1>ระบบจัดเวรนักเรียน</h1>
+
+        <p>ระบบจัดเวรและตรวจสอบการปฏิบัติงาน</p>
+
+        <div class="roles">
+
+            <button
+                id="studentRole"
+                class="role-btn active"
+                onclick="selectRole('student')">
+                👨‍🎓 นักเรียน
+            </button>
+
+            <button
+                id="leaderRole"
+                class="role-btn"
+                onclick="selectRole('leader')">
+                👑 หัวหน้าเวร
+            </button>
+
+            <button
+                id="teacherRole"
+                class="role-btn"
+                onclick="selectRole('teacher')">
+                👨‍🏫 ครู
+            </button>
+
+        </div>
+
+        <input
+            id="username"
+            class="input"
+            placeholder="รหัสนักเรียน">
+
+        <input
+            id="password"
+            class="input"
+            type="password"
+            placeholder="รหัสผ่าน">
+
+        <button
+            class="login-btn"
+            onclick="login()">
+            🔐 เข้าสู่ระบบ
+        </button>
+
+        <div class="demo">
+            <b>บัญชีทดลอง</b><br>
+            นักเรียน: 65001 / 1234<br>
+            หัวหน้าเวร: leader / 1234<br>
+            ครู: teacher / 1234
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- APP -->
+<div id="app" class="app hidden">
+
     <div class="header">
-        <h1>🏫 ระบบจัดเวรนักเรียน</h1>
-        <p>ระบบจัดเวรและหัวหน้าเวรตรวจสอบการปฏิบัติงาน</p>
+
+        <div>
+            <h1>🏫 ระบบจัดเวรนักเรียน</h1>
+            <p id="currentUser"></p>
+        </div>
+
+        <button onclick="logout()">
+            ออกจากระบบ
+        </button>
+
     </div>
 
     <div class="container">
 
-        <div class="stats">
+        <div class="welcome">
+            <h2 id="pageTitle">แดชบอร์ด</h2>
+            <p>จัดการเวร ตรวจสอบ และติดตามการปฏิบัติงาน</p>
+        </div>
 
-            <div class="stat">
-                <p>👨‍🎓 นักเรียนทั้งหมด</p>
-                <h3 id="totalStudents">0</h3>
+        <div class="menu">
+
+            <button
+                id="dashboardMenu"
+                class="active"
+                onclick="showPage('dashboard')">
+                📊 แดชบอร์ด
+            </button>
+
+            <button
+                onclick="showPage('duty')">
+                📋 ตารางเวร
+            </button>
+
+            <button
+                id="requestMenu"
+                onclick="showPage('request')">
+                📝 ขอหยุดเวร
+            </button>
+
+            <button
+                id="historyMenu"
+                onclick="showPage('history')">
+                📜 ประวัติ
+            </button>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+        <div id="dashboardPage">
+
+            <div class="cards">
+
+                <div class="card">
+                    <p>👨‍🎓 นักเรียน</p>
+                    <div id="studentCount"
+                         class="number blue">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>📋 งานเวรทั้งหมด</p>
+                    <div id="dutyCount"
+                         class="number blue">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>✅ ทำแล้ว</p>
+                    <div id="doneCount"
+                         class="number green">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>❌ ไม่ทำ</p>
+                    <div id="notDoneCount"
+                         class="number red">
+                        0
+                    </div>
+                </div>
+
             </div>
 
-            <div class="stat">
-                <p>✅ ทำเวรแล้ว</p>
-                <h3 id="completed">0</h3>
-            </div>
+            <div class="section">
 
-            <div class="stat">
-                <p>⏳ รอตรวจสอบ</p>
-                <h3 id="waiting">0</h3>
+                <h2>📌 การทำงานของระบบ</h2>
+
+                <div class="notice">
+                    เมื่อหัวหน้าเวรตรวจพบว่านักเรียนไม่ทำเวร
+                    ระบบจะหักคะแนนอัตโนมัติทันที
+                </div>
+
+                <p>
+                    คะแนนเริ่มต้นของนักเรียนทุกคน:
+                    <b>100 คะแนน</b>
+                </p>
+
+                <p style="margin-top:8px;">
+                    ไม่ทำเวร 1 ครั้ง:
+                    <b class="red">-5 คะแนน</b>
+                </p>
+
             </div>
 
         </div>
 
-        <div class="card">
 
-            <h2>📋 ตารางเวรประจำวัน</h2>
+        <!-- DUTY -->
+        <div id="dutyPage" class="hidden">
 
-            <table>
+            <div class="section">
 
-                <thead>
-                    <tr>
-                        <th>วันที่</th>
-                        <th>นักเรียน</th>
-                        <th>หน้าที่</th>
-                        <th>สถานะ</th>
-                    </tr>
-                </thead>
+                <h2>📋 ตารางเวร</h2>
 
-                <tbody id="dutyTable">
+                <table>
 
-                </tbody>
+                    <thead>
+                        <tr>
+                            <th>วันที่</th>
+                            <th>นักเรียน</th>
+                            <th>หน้าที่</th>
+                            <th>คะแนน</th>
+                            <th>สถานะ</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
 
-            </table>
+                    <tbody id="dutyTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- REQUEST -->
+        <div id="requestPage" class="hidden">
+
+            <div class="section">
+
+                <h2>📝 ขอหยุดเวร</h2>
+
+                <div class="form-group">
+
+                    <label>เหตุผล</label>
+
+                    <input
+                        id="leaveReason"
+                        class="text-input"
+                        placeholder="เช่น ไม่สบาย / มีกิจกรรมโรงเรียน">
+
+                </div>
+
+                <button
+                    class="action"
+                    onclick="requestLeave()">
+                    ส่งคำขอ
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+        <div id="historyPage" class="hidden">
+
+            <div class="section">
+
+                <h2>📜 ประวัติการหักคะแนน</h2>
+
+                <div id="historyList"></div>
+
+            </div>
 
         </div>
 
     </div>
 
-    <script>
+</div>
 
-        const duties = [
-            {
-                date: "23/09/2026",
-                student: "นักเรียนตัวอย่าง 1",
-                task: "กวาดห้อง",
-                status: "waiting"
-            },
-            {
-                date: "23/09/2026",
-                student: "นักเรียนตัวอย่าง 2",
-                task: "ถูพื้น",
-                status: "completed"
-            },
-            {
-                date: "23/09/2026",
-                student: "นักเรียนตัวอย่าง 3",
-                task: "เก็บขยะ",
-                status: "waiting"
-            }
-        ];
 
-        function renderDuty() {
+<script>
 
-            const table = document.getElementById("dutyTable");
+let selectedRole = "student";
+let currentUser = null;
 
-            table.innerHTML = "";
+const students = [
 
-            let completed = 0;
-            let waiting = 0;
+    {
+        id:"65001",
+        name:"นักเรียน 1",
+        password:"1234",
+        points:100
+    },
 
-            duties.forEach(function(duty) {
+    {
+        id:"65002",
+        name:"นักเรียน 2",
+        password:"1234",
+        points:100
+    },
 
-                let statusText = "";
+    {
+        id:"65003",
+        name:"นักเรียน 3",
+        password:"1234",
+        points:100
+    }
 
-                if (duty.status === "completed") {
-                    statusText = '<span class="success">✓ ทำแล้ว</span>';
-                    completed++;
-                }
+];
 
-                else if (duty.status === "waiting") {
-                    statusText = '<span class="waiting">⏳ รอตรวจสอบ</span>';
-                    waiting++;
-                }
 
-                else {
-                    statusText = '<span class="danger">✗ ไม่ทำ</span>';
-                }
+let duties = JSON.parse(
+    localStorage.getItem("duties")
+) || [
 
-                table.innerHTML += `
-                    <tr>
-                        <td>${duty.date}</td>
-                        <td>${duty.student}</td>
-                        <td>${duty.task}</td>
-                        <td>${statusText}</td>
-                    </tr>
-                `;
+    {
+        id:1,
+        date:"23/09/2026",
+        studentId:"65001",
+        task:"กวาดห้อง",
+        status:"waiting",
+        leaveReason:""
+    },
+
+    {
+        id:2,
+        date:"23/09/2026",
+        studentId:"65002",
+        task:"ถูพื้น",
+        status:"waiting",
+        leaveReason:""
+    },
+
+    {
+        id:3,
+        date:"23/09/2026",
+        studentId:"65003",
+        task:"เก็บขยะ",
+        status:"waiting",
+        leaveReason:""
+    }
+
+];
+
+
+let history = JSON.parse(
+    localStorage.getItem("history")
+) || [];
+
+
+function saveData(){
+
+    localStorage.setItem(
+        "duties",
+        JSON.stringify(duties)
+    );
+
+    localStorage.setItem(
+        "history",
+        JSON.stringify(history)
+    );
+
+}
+
+
+function selectRole(role){
+
+    selectedRole = role;
+
+    document
+        .querySelectorAll(".role-btn")
+        .forEach(function(btn){
+
+            btn.classList.remove("active");
+
+        });
+
+
+    if(role === "student"){
+
+        document
+            .getElementById("studentRole")
+            .classList.add("active");
+
+        document
+            .getElementById("username")
+            .placeholder =
+            "รหัสนักเรียน เช่น 65001";
+
+    }
+
+
+    if(role === "leader"){
+
+        document
+            .getElementById("leaderRole")
+            .classList.add("active");
+
+        document
+            .getElementById("username")
+            .placeholder =
+            "ชื่อผู้ใช้หัวหน้าเวร";
+
+    }
+
+
+    if(role === "teacher"){
+
+        document
+            .getElementById("teacherRole")
+            .classList.add("active");
+
+        document
+            .getElementById("username")
+            .placeholder =
+            "ชื่อผู้ใช้ครู";
+
+    }
+
+}
+
+
+function login(){
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("password")
+        .value
+        .trim();
+
+
+    if(!username || !password){
+
+        alert("กรุณากรอกข้อมูลให้ครบ");
+
+        return;
+
+    }
+
+
+    if(selectedRole === "student"){
+
+        const student =
+            students.find(function(s){
+
+                return s.id === username &&
+                       s.password === password;
 
             });
 
-            document.getElementById("totalStudents").textContent = duties.length;
-            document.getElementById("completed").textContent = completed;
-            document.getElementById("waiting").textContent = waiting;
+
+        if(!student){
+
+            alert("รหัสนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+
+            return;
+
         }
 
-        renderDuty();
 
-    </script>
+        currentUser = {
+            role:"student",
+            id:student.id,
+            name:student.name
+        };
 
-</body>
-</html>
+    }
+
+
+    else if(selectedRole === "leader"){
+
+        if(username !== "leader" ||
+           password !== "1234"){
+
+            alert("บัญชีหัวหน้าเวรไม่ถูกต้อง");
+
+            return;
+
+        }
+
+
+        currentUser = {
+            role:"leader",
+            id:"leader",
+            name:"หัวหน้าเวร"
+        };
+
+    }
+
+
+    else if(selectedRole === "teacher"){
+
+        if(username !== "teacher" ||
+           password !== "1234"){
+
+            alert("บัญชีครูไม่ถูกต้อง");
+
+            return;
+
+        }
+
+
+        currentUser = {
+            role:"teacher",
+            id:"teacher",
+            name:"คุณครู"
+        };
+
+    }
+
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("currentUser")
+        .textContent =
+        currentUser.name +
+        " | " +
+        roleText(currentUser.role);
+
+
+    setupMenu();
+
+    renderAll();
+
+}
+
+
+function roleText(role){
+
+    if(role === "student")
+        return "นักเรียน";
+
+    if(role === "leader")
+        return "หัวหน้าเวร";
+
+    return "ครู";
+
+}
+
+
+function logout(){
+
+    currentUser = null;
+
+    document
+        .getElementById("app")
+        .classList.add("hidden");
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("username")
+        .value = "";
+
+    document
+        .getElementById("password")
+        .value = "";
+
+}
+
+
+function setupMenu(){
+
+    const request =
+        document.getElementById("requestMenu");
+
+    const historyMenu =
+        document.getElementById("historyMenu");
+
+
+    if(currentUser.role === "student"){
+
+        request.classList.remove("hidden");
+
+        historyMenu.classList.remove("hidden");
+
+    }
+
+    else{
+
+        request.classList.add("hidden");
+
+        historyMenu.classList.remove("hidden");
+
+    }
+
+}
+
+
+function showPage(page){
+
+    const pages = [
+        "dashboard",
+        "duty",
+        "request",
+        "history"
+    ];
+
+
+    pages.forEach(function(p){
+
+        document
+            .getElementById(p + "Page")
+            .classList.add("hidden");
+
+    });
+
+
+    document
+        .getElementById(page + "Page")
+        .classList.remove("hidden");
+
+
+    document
+        .querySelectorAll(".menu button")
+        .forEach(function(btn){
+
+            btn.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById("pageTitle")
+        .textContent =
+        pageTitle(page);
+
+
+    renderAll();
+
+}
+
+
+function pageTitle(page){
+
+    if(page === "dashboard")
+        return "📊 แดชบอร์ด";
+
+    if(page === "duty")
+        return "📋 ตารางเวร";
+
+    if(page === "request")
+        return "📝 ขอหยุดเวร";
+
+    return "📜 ประวัติ";
+
+}
+
+
+function getStudent(id){
+
+    return students.find(function(s){
+
+        return s.id === id;
+
+    });
+
+}
+
+
+function renderDuty(){
+
+    const table =
+        document.getElementById("dutyTable");
+
+    table.innerHTML = "";
+
+
+    let visibleDuties = duties;
+
+
+    if(currentUser.role === "student"){
+
+        visibleDuties =
+            duties.filter(function(d){
+
+                return d.studentId === currentUser.id;
+
+            });
+
+    }
+
+
+    visibleDuties.forEach(function(duty){
+
+        const student =
+            getStudent(duty.studentId);
+
+
+        let status = "";
+
+
+        if(duty.status === "waiting"){
+
+            status =
+            '<span class="status waiting">⏳ รอตรวจ</span>';
+
+        }
+
+        else if(duty.status === "done"){
+
+            status =
+            '<span class="status done">✓ ทำแล้ว</span>';
+
+        }
+
+        else{
+
+            status =
+            '<span class="status notdone">✗ ไม่ทำ</span>';
+
+        }
+
+
+        let actions = "-";
+
+
+        if(currentUser.role === "leader" &&
+           duty.status === "waiting"){
+
+            actions =
+
+            '<button class="success-btn" onclick="markDone(' +
+            duty.id +
+            ')">✓ ทำแล้ว</button>' +
+
+            '<button class="danger-btn" onclick="markNotDone(' +
+            duty.id +
+            ')">✗ ไม่ทำ</button>';
+
+        }
+
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>${duty.date}</td>
+
+                <td>${student.name}</td>
+
+                <td>${duty.task}</td>
+
+                <td>
+                    <b class="${
+                        student.points < 100
+                        ? "red"
+                        : "green"
+                    }">
+                        ${student.points}
+                    </b>
+                </td>
+
+                <td>${status}</td>
+
+                <td>${actions}</td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+function markDone(id){
+
+    const duty =
+        duties.find(function(d){
+
+            return d.id === id;
+
+        });
+
+
+    if(!duty) return;
+
+
+    duty.status = "done";
+
+    saveData();
+
+    renderAll();
+
+    alert("บันทึกว่าทำเวรแล้ว ✓");
+
+}
+
+
+function markNotDone(id){
+
+    const duty =
+        duties.find(function(d){
+
+            return d.id === id;
+
+        });
+
+
+    if(!duty) return;
+
+
+    if(duty.status === "notdone"){
+
+        alert("รายการนี้ถูกหักคะแนนไปแล้ว");
+
+        return;
+
+    }
+
+
+    const student =
+        getStudent(duty.studentId);
+
+
+    duty.status = "notdone";
+
+
+    student.points -= 5;
+
+
+    history.unshift({
+
+        date:new Date().toLocaleString("th-TH"),
+
+        student:student.name,
+
+        studentId:student.id,
+
+        reason:"ไม่ทำเวร",
+
+        deduction:5,
+
+        remaining:student.points
+
+    });
+
+
+    saveData();
+
+    renderAll();
+
+
+    alert(
+        "❌ ไม่ทำเวร\n" +
+        "หักคะแนนอัตโนมัติ 5 คะแนน\n" +
+        "คะแนนคงเหลือ: " +
+        student.points
+    );
+
+}
+
+
+function requestLeave(){
+
+    if(currentUser.role !== "student"){
+
+        return;
+
+    }
+
+
+    const reason =
+        document
+        .getElementById("leaveReason")
+        .value
+        .trim();
+
+
+    if(!reason){
+
+        alert("กรุณาระบุเหตุผล");
+
+        return;
+
+    }
+
+
+    const duty =
+        duties.find(function(d){
+
+            return d.studentId === currentUser.id &&
+                   d.status === "waiting";
+
+        });
+
+
+    if(!duty){
+
+        alert("ไม่พบเวรที่สามารถขอหยุดได้");
+
+        return;
+
+    }
+
+
+    duty.leaveReason = reason;
+
+    saveData();
+
+
+    document
+        .getElementById("leaveReason")
+        .value = "";
+
+
+    alert(
+        "ส่งคำขอหยุดเวรแล้ว\n" +
+        "รอหัวหน้าเวรตรวจสอบ"
+    );
+
+
+    renderAll();
+
+}
+
+
+function renderHistory(){
+
+    const list =
+        document.getElementById("historyList");
+
+    list.innerHTML = "";
+
+
+    let visibleHistory = history;
+
+
+    if(currentUser.role === "student"){
+
+        visibleHistory =
+            history.filter(function(h){
+
+                return h.studentId === currentUser.id;
+
+            });
+
+    }
+
+
+    if(visibleHistory.length === 0){
+
+        list.innerHTML =
+        "<p>ยังไม่มีประวัติการหักคะแนน</p>";
+
+        return;
+
+    }
+
+
+    visibleHistory.forEach(function(h){
+
+        list.innerHTML += `
+
+            <div class="history-item">
+
+                <b>❌ ${h.st
