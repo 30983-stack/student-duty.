@@ -1153,4 +1153,1080 @@ function showPage(page,button){
 
 
     document
-        .querySelector
+                .querySelectorAll(".menu")
+        .forEach(function(menu){
+
+            menu.classList.remove("active");
+
+        });
+
+
+    if(button){
+        button.classList.add("active");
+    }else{
+
+        document
+            .querySelector('.menu[data-page="' + page + '"]')
+            ?.classList.add("active");
+
+    }
+
+}
+
+
+/* ================= STATUS ================= */
+
+function statusText(status){
+
+    if(status === "done"){
+        return '<span class="status done">✅ ทำแล้ว</span>';
+    }
+
+    if(status === "notdone"){
+        return '<span class="status notdone">❌ ไม่ทำ</span>';
+    }
+
+    if(status === "leave"){
+        return '<span class="status leave">📝 ลาหยุด</span>';
+    }
+
+    return '<span class="status waiting">⏳ รอตรวจ</span>';
+
+}
+
+
+/* ================= SCORE CLASS ================= */
+
+function scoreClass(points){
+
+    if(points >= 80){
+        return "score-good";
+    }
+
+    if(points >= 50){
+        return "score-mid";
+    }
+
+    return "score-low";
+
+}
+
+
+/* ================= FIND STUDENT ================= */
+
+function getStudent(studentId){
+
+    return students.find(function(student){
+
+        return student.id === studentId;
+
+    });
+
+}
+
+
+/* ================= DASHBOARD ================= */
+
+function renderDashboard(){
+
+    const totalStudents =
+        document.getElementById("totalStudents");
+
+    const totalDuties =
+        document.getElementById("totalDuties");
+
+    const totalDone =
+        document.getElementById("totalDone");
+
+    const totalNotDone =
+        document.getElementById("totalNotDone");
+
+
+    totalStudents.textContent =
+        students.length;
+
+
+    totalDuties.textContent =
+        duties.length;
+
+
+    totalDone.textContent =
+        duties.filter(function(duty){
+
+            return duty.status === "done";
+
+        }).length;
+
+
+    totalNotDone.textContent =
+        duties.filter(function(duty){
+
+            return duty.status === "notdone";
+
+        }).length;
+
+
+    const table =
+        document.getElementById("dashboardTable");
+
+
+    let list = duties;
+
+
+    if(currentRole === "student"){
+
+        list = duties.filter(function(duty){
+
+            return duty.studentId === currentUser.id;
+
+        });
+
+    }
+
+
+    if(list.length === 0){
+
+        table.innerHTML =
+            '<p>ยังไม่มีข้อมูลเวร</p>';
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+
+        <tr>
+            <th>วันที่</th>
+            <th>นักเรียน</th>
+            <th>งาน</th>
+            <th>สถานะ</th>
+        </tr>
+    `;
+
+
+    list.forEach(function(duty){
+
+        const student =
+            getStudent(duty.studentId);
+
+
+        html += `
+            <tr>
+
+                <td>${duty.date}</td>
+
+                <td>
+                    ${student ? student.name : duty.studentId}
+                </td>
+
+                <td>${duty.task}</td>
+
+                <td>
+                    ${statusText(duty.status)}
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+
+    html += `
+        </table>
+        </div>
+    `;
+
+
+    table.innerHTML = html;
+
+}
+
+
+/* ================= DUTY TABLE ================= */
+
+function renderDuties(){
+
+    const table =
+        document.getElementById("dutyTable");
+
+
+    let list = duties;
+
+
+    if(currentRole === "student"){
+
+        list = duties.filter(function(duty){
+
+            return duty.studentId === currentUser.id;
+
+        });
+
+    }
+
+
+    if(list.length === 0){
+
+        table.innerHTML =
+            "<p>ยังไม่มีรายการเวร</p>";
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+
+        <tr>
+            <th>วันที่</th>
+            <th>นักเรียน</th>
+            <th>งาน</th>
+            <th>สถานะ</th>
+            <th>จัดการ</th>
+        </tr>
+    `;
+
+
+    list.forEach(function(duty){
+
+        const student =
+            getStudent(duty.studentId);
+
+
+        html += `
+            <tr>
+
+                <td>${duty.date}</td>
+
+                <td>
+                    ${student ? student.name : duty.studentId}
+                </td>
+
+                <td>${duty.task}</td>
+
+                <td>
+                    ${statusText(duty.status)}
+                </td>
+
+                <td>
+        `;
+
+
+        if(
+            currentRole === "leader" ||
+            currentRole === "teacher"
+        ){
+
+            if(
+                duty.status === "waiting"
+            ){
+
+                html += `
+                    <button
+                        class="btn green"
+                        onclick="markDone(${duty.id})"
+                    >
+                        ✅ ทำแล้ว
+                    </button>
+
+                    <button
+                        class="btn red"
+                        onclick="markNotDone(${duty.id})"
+                    >
+                        ❌ ไม่ทำ
+                    </button>
+                `;
+
+            }else{
+
+                html += `
+                    <span style="color:#64748b">
+                        ตรวจแล้ว
+                    </span>
+                `;
+
+            }
+
+        }else{
+
+            if(duty.status === "waiting"){
+
+                html += `
+                    <span style="color:#64748b">
+                        รอหัวหน้าเวรตรวจ
+                    </span>
+                `;
+
+            }else{
+
+                html += statusText(duty.status);
+
+            }
+
+        }
+
+
+        html += `
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+
+    html += `
+        </table>
+        </div>
+    `;
+
+
+    table.innerHTML = html;
+
+}
+
+
+/* ================= MARK DONE ================= */
+
+function markDone(id){
+
+    const duty =
+        duties.find(function(item){
+
+            return item.id === id;
+
+        });
+
+
+    if(!duty){
+        return;
+    }
+
+
+    if(duty.status !== "waiting"){
+
+        alert("รายการนี้ถูกตรวจสอบแล้ว");
+        return;
+
+    }
+
+
+    duty.status = "done";
+
+
+    const student =
+        getStudent(duty.studentId);
+
+
+    histories.unshift({
+
+        id:Date.now(),
+
+        date:duty.date,
+
+        studentId:duty.studentId,
+
+        studentName:
+            student ? student.name : duty.studentId,
+
+        task:duty.task,
+
+        result:"done",
+
+        pointsChange:0,
+
+        note:"ทำเวรเรียบร้อย",
+
+        checkedBy:
+            currentUser ? currentUser.name : "หัวหน้าเวร"
+
+    });
+
+
+    saveData();
+
+    renderAll();
+
+
+    alert("✅ บันทึกว่าทำเวรแล้ว");
+
+}
+
+
+/* ================= MARK NOT DONE ================= */
+
+function markNotDone(id){
+
+    const duty =
+        duties.find(function(item){
+
+            return item.id === id;
+
+        });
+
+
+    if(!duty){
+        return;
+    }
+
+
+    if(duty.status !== "waiting"){
+
+        alert("รายการนี้ถูกตรวจสอบแล้ว");
+        return;
+
+    }
+
+
+    const student =
+        getStudent(duty.studentId);
+
+
+    const studentName =
+        student
+            ? student.name
+            : duty.studentId;
+
+
+    const confirmResult =
+        confirm(
+            "ยืนยันว่า " +
+            studentName +
+            " ไม่ได้ทำเวร?\n\n" +
+            "ระบบจะหักคะแนน 5 คะแนน"
+        );
+
+
+    if(!confirmResult){
+        return;
+    }
+
+
+    duty.status = "notdone";
+
+
+    if(student){
+
+        student.points =
+            Math.max(
+                0,
+                student.points - 5
+            );
+
+    }
+
+
+    histories.unshift({
+
+        id:Date.now(),
+
+        date:duty.date,
+
+        studentId:duty.studentId,
+
+        studentName:studentName,
+
+        task:duty.task,
+
+        result:"notdone",
+
+        pointsChange:-5,
+
+        note:"ไม่ทำเวร หัก 5 คะแนน",
+
+        checkedBy:
+            currentUser ? currentUser.name : "หัวหน้าเวร"
+
+    });
+
+
+    saveData();
+
+    renderAll();
+
+
+    alert(
+        "❌ บันทึกเรียบร้อย\n" +
+        "หักคะแนน 5 คะแนน"
+    );
+
+}
+
+
+/* ================= SEND LEAVE ================= */
+
+function sendLeave(){
+
+    if(currentRole !== "student"){
+
+        alert("เฉพาะนักเรียนเท่านั้นที่สามารถขอหยุดเวรได้");
+        return;
+
+    }
+
+
+    const reason =
+        document
+            .getElementById("reason")
+            .value
+            .trim();
+
+
+    if(reason === ""){
+
+        alert("กรุณากรอกเหตุผลที่ขอหยุดเวร");
+        return;
+
+    }
+
+
+    const studentDuties =
+        duties.filter(function(duty){
+
+            return duty.studentId === currentUser.id &&
+                   duty.status === "waiting";
+
+        });
+
+
+    if(studentDuties.length === 0){
+
+        alert("ไม่มีเวรที่กำลังรอตรวจ");
+        return;
+
+    }
+
+
+    const duty =
+        studentDuties[0];
+
+
+    const existing =
+        requests.find(function(request){
+
+            return request.studentId === currentUser.id &&
+                   request.dutyId === duty.id &&
+                   request.status === "pending";
+
+        });
+
+
+    if(existing){
+
+        alert("คุณส่งคำขอหยุดเวรนี้ไปแล้ว");
+        return;
+
+    }
+
+
+    requests.unshift({
+
+        id:Date.now(),
+
+        dutyId:duty.id,
+
+        studentId:currentUser.id,
+
+        studentName:currentUser.name,
+
+        date:duty.date,
+
+        task:duty.task,
+
+        reason:reason,
+
+        status:"pending",
+
+        createdAt:
+            new Date().toLocaleString("th-TH")
+
+    });
+
+
+    saveData();
+
+
+    document
+        .getElementById("reason")
+        .value = "";
+
+
+    renderAll();
+
+
+    alert("📨 ส่งคำขอหยุดเวรแล้ว รอครูตรวจสอบ");
+
+}
+
+
+/* ================= REQUEST STATUS ================= */
+
+function requestStatus(status){
+
+    if(status === "approved"){
+
+        return '<span class="status done">✅ อนุมัติ</span>';
+
+    }
+
+
+    if(status === "rejected"){
+
+        return '<span class="status notdone">❌ ไม่อนุมัติ</span>';
+
+    }
+
+
+    return '<span class="status waiting">⏳ รอตรวจสอบ</span>';
+
+}
+
+
+/* ================= REQUEST TABLE ================= */
+
+function renderRequests(){
+
+    const table =
+        document.getElementById("requestTable");
+
+
+    if(
+        currentRole !== "leader" &&
+        currentRole !== "teacher"
+    ){
+
+        table.innerHTML =
+            "<p>ไม่มีสิทธิ์เข้าถึงหน้านี้</p>";
+
+        return;
+
+    }
+
+
+    if(requests.length === 0){
+
+        table.innerHTML =
+            "<p>ยังไม่มีคำขอหยุดเวร</p>";
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+
+        <tr>
+            <th>วันที่</th>
+            <th>นักเรียน</th>
+            <th>งาน</th>
+            <th>เหตุผล</th>
+            <th>สถานะ</th>
+            <th>จัดการ</th>
+        </tr>
+    `;
+
+
+    requests.forEach(function(request){
+
+        html += `
+            <tr>
+
+                <td>${request.date}</td>
+
+                <td>${request.studentName}</td>
+
+                <td>${request.task}</td>
+
+                <td>${request.reason}</td>
+
+                <td>
+                    ${requestStatus(request.status)}
+                </td>
+
+                <td>
+        `;
+
+
+        if(request.status === "pending"){
+
+            html += `
+                <button
+                    class="btn green"
+                    onclick="approveRequest(${request.id})"
+                >
+                    ✅ อนุมัติ
+                </button>
+
+                <button
+                    class="btn red"
+                    onclick="rejectRequest(${request.id})"
+                >
+                    ❌ ปฏิเสธ
+                </button>
+            `;
+
+        }else{
+
+            html += `
+                <span style="color:#64748b">
+                    ดำเนินการแล้ว
+                </span>
+            `;
+
+        }
+
+
+        html += `
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+
+    html += `
+        </table>
+        </div>
+    `;
+
+
+    table.innerHTML = html;
+
+}
+
+
+/* ================= APPROVE REQUEST ================= */
+
+function approveRequest(id){
+
+    const request =
+        requests.find(function(item){
+
+            return item.id === id;
+
+        });
+
+
+    if(!request){
+        return;
+    }
+
+
+    if(request.status !== "pending"){
+
+        alert("คำขอนี้ถูกดำเนินการแล้ว");
+        return;
+
+    }
+
+
+    request.status = "approved";
+
+
+    const duty =
+        duties.find(function(item){
+
+            return item.id === request.dutyId;
+
+        });
+
+
+    if(duty){
+
+        duty.status = "leave";
+
+    }
+
+
+    saveData();
+
+    renderAll();
+
+
+    alert("✅ อนุมัติการหยุดเวรแล้ว");
+
+}
+
+
+/* ================= REJECT REQUEST ================= */
+
+function rejectRequest(id){
+
+    const request =
+        requests.find(function(item){
+
+            return item.id === id;
+
+        });
+
+
+    if(!request){
+        return;
+
+    }
+
+
+    if(request.status !== "pending"){
+
+        alert("คำขอนี้ถูกดำเนินการแล้ว");
+        return;
+
+    }
+
+
+    request.status = "rejected";
+
+
+    saveData();
+
+    renderAll();
+
+
+    alert("❌ ปฏิเสธคำขอหยุดเวรแล้ว");
+
+}
+
+
+/* ================= HISTORY ================= */
+
+function renderHistory(){
+
+    const table =
+        document.getElementById("historyTable");
+
+
+    let list = histories;
+
+
+    if(currentRole === "student"){
+
+        list = histories.filter(function(history){
+
+            return history.studentId === currentUser.id;
+
+        });
+
+    }
+
+
+    if(list.length === 0){
+
+        table.innerHTML =
+            "<p>ยังไม่มีประวัติ</p>";
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+
+        <tr>
+            <th>วันที่</th>
+            <th>นักเรียน</th>
+            <th>งาน</th>
+            <th>ผลการตรวจ</th>
+            <th>คะแนน</th>
+            <th>ผู้ตรวจ</th>
+        </tr>
+    `;
+
+
+    list.forEach(function(history){
+
+        const result =
+            history.result === "done"
+                ? '<span class="status done">✅ ทำแล้ว</span>'
+                : '<span class="status notdone">❌ ไม่ทำ</span>';
+
+
+        const points =
+            history.pointsChange > 0
+                ? "+" + history.pointsChange
+                : history.pointsChange;
+
+
+        html += `
+            <tr>
+
+                <td>${history.date}</td>
+
+                <td>${history.studentName}</td>
+
+                <td>${history.task}</td>
+
+                <td>${result}</td>
+
+                <td>${points}</td>
+
+                <td>${history.checkedBy}</td>
+
+            </tr>
+        `;
+
+    });
+
+
+    html += `
+        </table>
+        </div>
+    `;
+
+
+    table.innerHTML = html;
+
+}
+
+
+/* ================= STUDENTS ================= */
+
+function renderStudents(){
+
+    const table =
+        document.getElementById("studentTable");
+
+
+    if(currentRole === "student"){
+
+        const student =
+            getStudent(currentUser.id);
+
+
+        if(!student){
+
+            table.innerHTML =
+                "<p>ไม่พบข้อมูลนักเรียน</p>";
+
+            return;
+
+        }
+
+
+        table.innerHTML = `
+            <div class="box">
+
+                <h3>
+                    👨‍🎓 ${student.name}
+                </h3>
+
+                <p style="margin-top:10px">
+                    รหัสนักเรียน:
+                    <b>${student.id}</b>
+                </p>
+
+                <p style="margin-top:10px">
+                    คะแนนปัจจุบัน:
+                    <span class="score ${scoreClass(student.points)}">
+                        ${student.points}
+                    </span>
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(
+        currentRole !== "leader" &&
+        currentRole !== "teacher"
+    ){
+
+        table.innerHTML =
+            "<p>ไม่มีสิทธิ์เข้าถึงหน้านี้</p>";
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+
+        <tr>
+            <th>รหัสนักเรียน</th>
+            <th>ชื่อ</th>
+            <th>คะแนน</th>
+        </tr>
+    `;
+
+
+    students.forEach(function(student){
+
+        html += `
+            <tr>
+
+                <td>${student.id}</td>
+
+                <td>${student.name}</td>
+
+                <td>
+                    <span class="score ${scoreClass(student.points)}">
+                        ${student.points}
+                    </span>
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+
+    html += `
+        </table>
+        </div>
+    `;
+
+
+    table.innerHTML = html;
+
+}
+
+
+/* ================= RENDER ALL ================= */
+
+function renderAll(){
+
+    renderDashboard();
+
+    renderDuties();
+
+    renderHistory();
+
+    renderStudents();
+
+    renderRequests();
+
+}
+
+
+/* ================= LEAVE BUTTON ================= */
+
+document
+    .getElementById("sendLeaveButton")
+    .addEventListener(
+        "click",
+        sendLeave
+    );
+
+
+/* ================= INITIAL ================= */
+
+loadData();
+
+</script>
+
+</body>
+</html>
