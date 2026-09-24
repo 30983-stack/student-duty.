@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Duty - ระบบจัดเวรนักเรียน</title>
+
+<title>Student Duty Management System</title>
 
 <style>
 *{
@@ -22,7 +23,13 @@ body{
   display:none!important;
 }
 
-/* LOGIN */
+button{
+  border:0;
+  cursor:pointer;
+}
+
+/* ================= LOGIN ================= */
+
 #loginPage{
   min-height:100vh;
   display:flex;
@@ -34,16 +41,16 @@ body{
 
 .login-box{
   width:100%;
-  max-width:450px;
+  max-width:430px;
   background:white;
-  border-radius:25px;
-  padding:35px;
+  border-radius:24px;
+  padding:30px;
   box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-.logo{
+.login-logo{
   text-align:center;
-  font-size:50px;
+  font-size:55px;
   margin-bottom:10px;
 }
 
@@ -51,90 +58,77 @@ body{
   text-align:center;
   font-size:28px;
   font-weight:bold;
+  color:#1e293b;
 }
 
 .login-subtitle{
   text-align:center;
   color:#64748b;
-  margin:8px 0 20px;
+  margin:8px 0 25px;
 }
 
-.roles{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+.role-buttons{
+  display:flex;
   gap:8px;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
 .role-btn{
-  border:2px solid #e2e8f0;
-  background:white;
-  border-radius:12px;
+  flex:1;
   padding:12px 5px;
-  cursor:pointer;
-  font-size:13px;
-}
-
-.role-btn.active{
-  border-color:#2563eb;
-  background:#eff6ff;
-  color:#2563eb;
+  border-radius:12px;
+  background:#e2e8f0;
+  color:#334155;
   font-weight:bold;
 }
 
-.form-group{
+.role-btn.active{
+  background:#2563eb;
+  color:white;
+}
+
+.input-group{
   margin-bottom:15px;
 }
 
-.form-group label{
+.input-group label{
   display:block;
   margin-bottom:7px;
   font-weight:bold;
 }
 
-.form-group input{
+.input-group input{
   width:100%;
-  padding:13px;
-  border:2px solid #e2e8f0;
+  padding:14px;
+  border:1px solid #cbd5e1;
   border-radius:12px;
   font-size:16px;
   outline:none;
 }
 
-.form-group input:focus{
+.input-group input:focus{
   border-color:#2563eb;
 }
 
 .login-btn{
   width:100%;
-  padding:14px;
-  border:none;
+  padding:15px;
   border-radius:12px;
   background:#2563eb;
   color:white;
   font-size:17px;
   font-weight:bold;
-  cursor:pointer;
 }
 
-.register-btn{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:2px solid #2563eb;
-  border-radius:12px;
-  background:white;
-  color:#2563eb;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+.login-btn:hover{
+  background:#1d4ed8;
 }
 
-.demo{
-  margin-top:18px;
-  background:#f8fafc;
-  border-radius:15px;
+.demo-box{
+  margin-top:20px;
   padding:15px;
+  border-radius:14px;
+  background:#eff6ff;
   font-size:13px;
   line-height:1.8;
 }
@@ -143,11 +137,12 @@ body{
   margin-top:15px;
   text-align:center;
   font-size:13px;
-  color:#16a34a;
+  color:#64748b;
 }
 
-/* APP */
-#app{
+/* ================= APP ================= */
+
+#appPage{
   min-height:100vh;
 }
 
@@ -159,6 +154,9 @@ body{
   align-items:center;
   justify-content:space-between;
   padding:0 25px;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .header-title{
@@ -166,24 +164,21 @@ body{
   font-weight:bold;
 }
 
-.header-right{
+.header-user{
   display:flex;
   align-items:center;
   gap:15px;
 }
 
-.clock{
-  color:#cbd5e1;
-}
-
-.logout{
-  border:none;
-  background:#ef4444;
-  color:white;
+.logout-btn{
   padding:9px 15px;
   border-radius:10px;
-  cursor:pointer;
+  background:#ef4444;
+  color:white;
+  font-weight:bold;
 }
+
+/* ================= SIDEBAR ================= */
 
 .layout{
   display:flex;
@@ -191,29 +186,34 @@ body{
 }
 
 .sidebar{
-  width:230px;
-  background:#0f172a;
+  width:240px;
+  background:white;
+  border-right:1px solid #e2e8f0;
   padding:20px 12px;
 }
 
 .menu-btn{
   width:100%;
-  border:none;
-  background:transparent;
-  color:#cbd5e1;
-  padding:13px 15px;
   text-align:left;
-  border-radius:10px;
-  cursor:pointer;
-  margin-bottom:5px;
+  padding:13px 15px;
+  margin-bottom:7px;
+  border-radius:12px;
+  background:white;
+  color:#334155;
   font-size:15px;
+  font-weight:bold;
 }
 
-.menu-btn:hover,
+.menu-btn:hover{
+  background:#eff6ff;
+}
+
 .menu-btn.active{
   background:#2563eb;
   color:white;
 }
+
+/* ================= CONTENT ================= */
 
 .content{
   flex:1;
@@ -230,10 +230,17 @@ body{
 }
 
 .page-title{
-  font-size:28px;
+  font-size:27px;
   font-weight:bold;
-  margin-bottom:20px;
+  margin-bottom:5px;
 }
+
+.page-subtitle{
+  color:#64748b;
+  margin-bottom:25px;
+}
+
+/* ================= CARDS ================= */
 
 .cards{
   display:grid;
@@ -246,76 +253,72 @@ body{
   background:white;
   border-radius:18px;
   padding:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.06);
+  box-shadow:0 4px 15px rgba(15,23,42,.06);
 }
 
 .card-icon{
   font-size:30px;
 }
 
-.card-number{
+.card-title{
+  color:#64748b;
+  margin-top:8px;
+}
+
+.card-value{
   font-size:30px;
   font-weight:bold;
-  margin:8px 0;
+  margin-top:5px;
 }
 
-.card-label{
-  color:#64748b;
-}
-
-.score-card{
-  background:linear-gradient(135deg,#16a34a,#22c55e);
-  color:white;
-}
-
-.score-card .card-label{
-  color:#dcfce7;
-}
+/* ================= TABLE ================= */
 
 .table-box{
   background:white;
   border-radius:18px;
   padding:20px;
   overflow:auto;
+  box-shadow:0 4px 15px rgba(15,23,42,.06);
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:700px;
-}
-
-th,td{
-  padding:13px;
-  border-bottom:1px solid #e2e8f0;
-  text-align:left;
+  min-width:750px;
 }
 
 th{
   background:#f8fafc;
+  padding:13px;
+  text-align:left;
+  color:#475569;
+}
+
+td{
+  padding:13px;
+  border-top:1px solid #e2e8f0;
 }
 
 .status{
   display:inline-block;
   padding:6px 10px;
-  border-radius:20px;
-  font-size:13px;
+  border-radius:9px;
   font-weight:bold;
 }
 
 .status-done{
   background:#dcfce7;
-  color:#15803d;
+  color:#166534;
 }
 
 .status-notdone{
   background:#fee2e2;
-  color:#dc2626;
+  color:#991b1b;
 }
 
 .status-waiting{
   background:#fef3c7;
-  color:#b45309;
+  color:#92400e;
 }
 
 .status-leave{
@@ -323,207 +326,90 @@ th{
   color:#1d4ed8;
 }
 
+/* ================= BUTTONS ================= */
+
 .action-btn{
-  border:none;
-  padding:7px 10px;
-  border-radius:8px;
-  cursor:pointer;
-  margin:2px;
+  padding:8px 12px;
+  border-radius:9px;
+  color:white;
   font-weight:bold;
+  margin:2px;
 }
 
 .btn-done{
-  background:#22c55e;
-  color:white;
+  background:#16a34a;
 }
 
 .btn-notdone{
-  background:#ef4444;
-  color:white;
+  background:#dc2626;
 }
 
 .btn-approve{
   background:#2563eb;
-  color:white;
 }
 
 .btn-reject{
   background:#64748b;
-  color:white;
 }
 
-.btn-register{
-  background:#2563eb;
-  color:white;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.duty-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:15px;
-}
-
-.duty-card{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.06);
-}
-
-.duty-date{
-  font-size:18px;
-  font-weight:bold;
-  color:#2563eb;
-  margin-bottom:10px;
-}
-
-.reason{
-  width:100%;
-  min-height:80px;
-  margin:10px 0;
-  padding:10px;
-  border:2px solid #e2e8f0;
-  border-radius:10px;
-  resize:vertical;
-}
-
-.empty{
-  text-align:center;
-  padding:40px;
-  color:#64748b;
-}
+/* ================= LEADERBOARD ================= */
 
 .leaderboard{
   display:grid;
   gap:12px;
 }
 
-.rank{
+.rank-item{
   background:white;
   border-radius:16px;
-  padding:18px;
+  padding:17px;
   display:flex;
   align-items:center;
   gap:15px;
-  box-shadow:0 4px 15px rgba(0,0,0,.05);
+  box-shadow:0 4px 12px rgba(15,23,42,.05);
 }
 
 .rank-number{
-  font-size:25px;
-  font-weight:bold;
   width:45px;
-  text-align:center;
-}
-
-.rank-name{
-  flex:1;
-  font-weight:bold;
-}
-
-.done-count{
-  color:#16a34a;
-  font-weight:bold;
-}
-
-.score{
-  color:#2563eb;
-  font-weight:bold;
-}
-
-.request-card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,.05);
-}
-
-.request-actions{
-  margin-top:12px;
-}
-
-.history-item{
-  background:white;
-  padding:15px;
-  border-radius:14px;
-  margin-bottom:10px;
-  border-left:4px solid #2563eb;
-}
-
-.register-box{
-  background:white;
-  border-radius:18px;
-  padding:25px;
-  max-width:600px;
-  box-shadow:0 5px 20px rgba(0,0,0,.06);
-}
-
-.register-box h3{
-  margin-bottom:18px;
-}
-
-.register-input{
-  width:100%;
-  padding:12px;
-  border:2px solid #e2e8f0;
-  border-radius:10px;
-  margin-bottom:12px;
-  font-size:16px;
-}
-
-.firebase-fixed{
-  position:fixed;
-  right:15px;
-  bottom:15px;
-  background:white;
-  padding:8px 12px;
-  border-radius:20px;
-  box-shadow:0 3px 15px rgba(0,0,0,.15);
-  font-size:12px;
-  color:#16a34a;
-  z-index:10;
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,.65);
+  height:45px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:20px;
-  z-index:100;
-}
-
-.modal-box{
-  background:white;
-  width:100%;
-  max-width:450px;
-  border-radius:20px;
-  padding:25px;
-}
-
-.modal-box h2{
-  margin-bottom:18px;
-}
-
-.modal-close{
-  width:100%;
-  margin-top:10px;
-  padding:11px;
-  border:none;
-  border-radius:10px;
   background:#e2e8f0;
-  cursor:pointer;
+  font-weight:bold;
+  font-size:18px;
 }
+
+.rank-info{
+  flex:1;
+}
+
+.rank-name{
+  font-weight:bold;
+}
+
+.rank-score{
+  font-size:20px;
+  font-weight:bold;
+  color:#2563eb;
+}
+
+/* ================= NOTICE ================= */
+
+.notice{
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:20px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1e40af;
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:900px){
+
   .cards{
     grid-template-columns:repeat(2,1fr);
   }
@@ -531,19 +417,26 @@ th{
   .sidebar{
     width:190px;
   }
+
 }
 
 @media(max-width:650px){
+
   .header{
     padding:0 12px;
   }
 
   .header-title{
-    font-size:15px;
+    font-size:16px;
   }
 
-  .clock{
-    display:none;
+  .header-user{
+    font-size:12px;
+    gap:6px;
+  }
+
+  .logout-btn{
+    padding:7px 9px;
   }
 
   .layout{
@@ -555,12 +448,14 @@ th{
     display:flex;
     overflow-x:auto;
     padding:8px;
+    border-right:0;
+    border-bottom:1px solid #e2e8f0;
   }
 
   .menu-btn{
     min-width:120px;
-    margin:0 4px;
-    text-align:center;
+    margin-right:5px;
+    margin-bottom:0;
   }
 
   .content{
@@ -569,28 +464,32 @@ th{
 
   .cards{
     grid-template-columns:1fr 1fr;
+    gap:10px;
   }
 
-  .page-title{
-    font-size:22px;
+  .card{
+    padding:15px;
   }
 
-  .login-box{
-    padding:25px 20px;
+  .card-value{
+    font-size:25px;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
 <div id="loginPage">
 
   <div class="login-box">
 
-    <div class="logo">🏫</div>
+    <div class="login-logo">🏫</div>
 
     <div class="login-title">
       Student Duty
@@ -600,29 +499,32 @@ th{
       ระบบจัดเวรและหัวหน้าเวรเช็ค
     </div>
 
-    <div class="roles">
+    <div class="role-buttons">
 
-      <button class="role-btn active"
-              id="studentRole"
-              onclick="selectRole('student')">
-        👨‍🎓<br>นักเรียน
+      <button
+        id="studentRole"
+        class="role-btn active"
+        onclick="selectRole('student')">
+        👨‍🎓 นักเรียน
       </button>
 
-      <button class="role-btn"
-              id="leaderRole"
-              onclick="selectRole('leader')">
-        👑<br>หัวหน้าเวร
+      <button
+        id="leaderRole"
+        class="role-btn"
+        onclick="selectRole('leader')">
+        👑 หัวหน้าเวร
       </button>
 
-      <button class="role-btn"
-              id="teacherRole"
-              onclick="selectRole('teacher')">
-        👩‍🏫<br>ครู
+      <button
+        id="teacherRole"
+        class="role-btn"
+        onclick="selectRole('teacher')">
+        👨‍🏫 ครู
       </button>
 
     </div>
 
-    <div class="form-group">
+    <div class="input-group">
 
       <label id="usernameLabel">
         รหัสนักเรียน
@@ -635,7 +537,7 @@ th{
 
     </div>
 
-    <div class="form-group">
+    <div class="input-group">
 
       <label>
         รหัสผ่าน
@@ -644,38 +546,35 @@ th{
       <input
         id="password"
         type="password"
-        placeholder="รหัสผ่าน">
+        placeholder="กรอกรหัสผ่าน">
 
     </div>
 
-    <button class="login-btn"
-            onclick="login()">
+    <button
+      class="login-btn"
+      onclick="login()">
       🔐 เข้าสู่ระบบ
     </button>
 
-    <button class="register-btn"
-            onclick="openRegister()">
-      📝 ลงทะเบียนนักเรียน
-    </button>
+    <div class="demo-box">
 
-    <div class="firebase-status"
-         id="loginFirebaseStatus">
-      🟡 กำลังเชื่อมต่อ Firebase...
-    </div>
-
-    <div class="demo">
-
-      <b>บัญชีทดลอง</b><br>
+      <b>บัญชีสำหรับทดสอบ</b><br>
 
       👨‍🎓 นักเรียน:
-      <b>65001 / 1234</b><br>
+      65001 / 1234<br>
 
       👑 หัวหน้าเวร:
-      <b>leader / 1234</b><br>
+      leader / 1234<br>
 
-      👩‍🏫 ครู:
-      <b>teacher / 1234</b>
+      👨‍🏫 ครู:
+      teacher / 1234
 
+    </div>
+
+    <div
+      id="firebaseStatus"
+      class="firebase-status">
+      🔄 กำลังเชื่อมต่อ Firebase...
     </div>
 
   </div>
@@ -683,262 +582,245 @@ th{
 </div>
 
 
-<!-- ================= REGISTER MODAL ================= -->
+<!-- =====================================================
+     APP
+===================================================== -->
 
-<div id="registerModal"
-     class="modal hidden">
+<div id="appPage" class="hidden">
 
-  <div class="modal-box">
-
-    <h2>
-      📝 ลงทะเบียนนักเรียน
-    </h2>
-
-    <input
-      id="regId"
-      class="register-input"
-      placeholder="รหัสนักเรียน เช่น 65004">
-
-    <input
-      id="regName"
-      class="register-input"
-      placeholder="ชื่อ-นามสกุล">
-
-    <input
-      id="regPassword"
-      class="register-input"
-      type="password"
-      placeholder="ตั้งรหัสผ่าน">
-
-    <button
-      class="btn-register"
-      onclick="registerStudent()">
-      ✅ สมัครสมาชิก
-    </button>
-
-    <button
-      class="modal-close"
-      onclick="closeRegister()">
-      ปิด
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- ================= APP ================= -->
-
-<div id="app"
-     class="hidden">
-
-  <header class="header">
+  <div class="header">
 
     <div class="header-title">
-      🏫 Student Duty
+      🏫 Student Duty Management
     </div>
 
-    <div class="header-right">
+    <div class="header-user">
 
-      <span class="clock"
-            id="clock"></span>
+      <span id="currentUserName">
+        ผู้ใช้งาน
+      </span>
 
-      <span id="currentUser"></span>
-
-      <button class="logout"
-              onclick="logout()">
+      <button
+        class="logout-btn"
+        onclick="logout()">
         ออกจากระบบ
       </button>
 
     </div>
 
-  </header>
+  </div>
 
 
   <div class="layout">
 
-    <aside class="sidebar">
+    <div class="sidebar">
 
-      <button class="menu-btn active"
-              onclick="showPage('dashboard',this)">
-        🏠 Dashboard
+      <button
+        class="menu-btn active"
+        onclick="showPage('dashboard',this)">
+        🏠 หน้าหลัก
       </button>
 
-      <button class="menu-btn"
-              onclick="showPage('duties',this)">
+      <button
+        class="menu-btn"
+        onclick="showPage('duty',this)">
         📅 ตารางเวร
       </button>
 
-      <button class="menu-btn"
-              onclick="showPage('students',this)">
-        👨‍🎓 นักเรียน
-      </button>
-
-      <button class="menu-btn"
-              onclick="showPage('requests',this)">
-        📝 คำขอหยุดเวร
-      </button>
-
-      <button class="menu-btn"
-              onclick="showPage('history',this)">
-        📜 ประวัติ
-      </button>
-
-      <button class="menu-btn"
-              onclick="showPage('leaderboard',this)">
+      <button
+        class="menu-btn"
+        onclick="showPage('leaderboard',this)">
         🏆 Leaderboard
       </button>
 
-    </aside>
+      <button
+        class="menu-btn"
+        onclick="showPage('requests',this)">
+        📝 คำขอหยุดเวร
+      </button>
+
+      <button
+        class="menu-btn"
+        onclick="showPage('students',this)">
+        👥 นักเรียน
+      </button>
+
+      <button
+        class="menu-btn"
+        onclick="showPage('history',this)">
+        📜 ประวัติ
+      </button>
+
+    </div>
 
 
-    <main class="content">
+    <div class="content">
 
+      <!-- DASHBOARD -->
 
-      <!-- ================= DASHBOARD ================= -->
-
-      <section id="dashboard"
-               class="page active">
+      <div
+        id="dashboard"
+        class="page active">
 
         <div class="page-title">
-          📊 Dashboard
+          Dashboard
         </div>
 
-        <div class="cards">
-
-          <div class="card">
-
-            <div class="card-icon">
-              👨‍🎓
-            </div>
-
-            <div class="card-number"
-                 id="statStudents">
-              0
-            </div>
-
-            <div class="card-label">
-              นักเรียน
-            </div>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              📅
-            </div>
-
-            <div class="card-number"
-                 id="statDuties">
-              0
-            </div>
-
-            <div class="card-label">
-              รายการเวร
-            </div>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              ✅
-            </div>
-
-            <div class="card-number"
-                 id="statDone">
-              0
-            </div>
-
-            <div class="card-label">
-              ทำแล้ว
-            </div>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              ⏳
-            </div>
-
-            <div class="card-number"
-                 id="statWaiting">
-              0
-            </div>
-
-            <div class="card-label">
-              รอดำเนินการ
-            </div>
-
-          </div>
-
-
+        <div class="page-subtitle">
+          ภาพรวมระบบจัดเวรนักเรียน
         </div>
 
-
-        <div class="cards">
-
-          <div class="card score-card">
-
-            <div class="card-icon">
-              ⭐
-            </div>
-
-            <div class="card-number"
-                 id="statMyScore">
-              -
-            </div>
-
-            <div class="card-label">
-              คะแนนของฉัน
-            </div>
-
-          </div>
-
+        <div
+          id="dashboardCards"
+          class="cards">
         </div>
 
+        <div class="notice">
 
-        <div class="table-box">
+          ⭐ <b>ระบบคะแนนอัตโนมัติ</b><br>
 
-          <h3>
-            📌 เวรล่าสุด
-          </h3>
+          เมื่อนักเรียนถูกตรวจว่า
+          <b>❌ ไม่ทำเวร</b>
+          ระบบจะหักคะแนนอัตโนมัติ
+          <b>1 คะแนน</b>
 
           <br>
 
-          <div id="dashboardTable"></div>
+          🛡️ ระบบป้องกันการหักคะแนนซ้ำ
+          สำหรับเวรเดิม
 
         </div>
 
-      </section>
+        <div class="table-box">
+
+          <h3 style="margin-bottom:15px">
+            📅 เวรวันนี้
+          </h3>
+
+          <div id="todayDuty">
+          </div>
+
+        </div>
+
+      </div>
 
 
-      <!-- ================= DUTIES ================= -->
+      <!-- DUTY -->
 
-      <section id="duties"
-               class="page">
+      <div
+        id="duty"
+        class="page">
 
         <div class="page-title">
           📅 ตารางเวร
         </div>
 
-        <div id="dutiesContent"></div>
+        <div class="page-subtitle">
+          ตรวจสอบและจัดการเวรนักเรียน
+        </div>
 
-      </section>
+        <div class="table-box">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>วันที่</th>
+                <th>นักเรียน</th>
+                <th>สถานะ</th>
+                <th>เหตุผล</th>
+                <th>การจัดการ</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="dutyTable">
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
 
 
-      <!-- ================= STUDENTS ================= -->
+      <!-- LEADERBOARD -->
 
-      <section id="students"
-               class="page">
+      <div
+        id="leaderboard"
+        class="page">
 
         <div class="page-title">
-          👨‍🎓 รายชื่อนักเรียน
+          🏆 Leaderboard
+        </div>
+
+        <div class="page-subtitle">
+          สถิติการทำเวรของนักเรียน
+        </div>
+
+        <div
+          id="leaderboardList"
+          class="leaderboard">
+        </div>
+
+      </div>
+
+
+      <!-- REQUESTS -->
+
+      <div
+        id="requests"
+        class="page">
+
+        <div class="page-title">
+          📝 คำขอหยุดเวร
+        </div>
+
+        <div class="page-subtitle">
+          ตรวจสอบคำขอหยุดเวรของนักเรียน
+        </div>
+
+        <div class="table-box">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>นักเรียน</th>
+                <th>วันที่</th>
+                <th>เหตุผล</th>
+                <th>สถานะ</th>
+                <th>จัดการ</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="requestTable">
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- STUDENTS -->
+
+      <div
+        id="students"
+        class="page">
+
+        <div class="page-title">
+          👥 นักเรียน
+        </div>
+
+        <div class="page-subtitle">
+          คะแนนและสถิติการทำเวร
         </div>
 
         <div class="table-box">
@@ -951,89 +833,74 @@ th{
                 <th>รหัส</th>
                 <th>ชื่อ</th>
                 <th>คะแนน</th>
-                <th>ทำเวรสำเร็จ</th>
+                <th>ทำเวร</th>
                 <th>ไม่ทำเวร</th>
               </tr>
 
             </thead>
 
-            <tbody id="studentsTable"></tbody>
+            <tbody id="studentTable">
+            </tbody>
 
           </table>
 
         </div>
 
-      </section>
+      </div>
 
 
-      <!-- ================= REQUESTS ================= -->
+      <!-- HISTORY -->
 
-      <section id="requests"
-               class="page">
-
-        <div class="page-title">
-          📝 คำขอหยุดเวร
-        </div>
-
-        <div id="requestsContent"></div>
-
-      </section>
-
-
-      <!-- ================= HISTORY ================= -->
-
-      <section id="history"
-               class="page">
+      <div
+        id="history"
+        class="page">
 
         <div class="page-title">
           📜 ประวัติการทำงาน
         </div>
 
-        <div id="historyContent"></div>
-
-      </section>
-
-
-      <!-- ================= LEADERBOARD ================= -->
-
-      <section id="leaderboard"
-               class="page">
-
-        <div class="page-title">
-          🏆 Leaderboard
+        <div class="page-subtitle">
+          ประวัติการตรวจเวรและการเปลี่ยนแปลงคะแนน
         </div>
 
-        <p style="margin-bottom:20px;color:#64748b">
-          จัดอันดับจากจำนวนครั้งที่ทำเวรสำเร็จ
-        </p>
+        <div class="table-box">
 
-        <div class="leaderboard"
-             id="leaderboardContent"></div>
+          <table>
 
-      </section>
+            <thead>
 
+              <tr>
+                <th>เวลา</th>
+                <th>รายการ</th>
+              </tr>
 
-    </main>
+            </thead>
+
+            <tbody id="historyTable">
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
 </div>
 
 
-<div class="firebase-fixed"
-     id="firebaseStatus">
-  🟡 Firebase
-</div>
-
+<!-- =====================================================
+     FIREBASE + JAVASCRIPT
+===================================================== -->
 
 <script type="module">
 
-/* =========================
-   FIREBASE IMPORT
-========================= */
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
   getFirestore,
@@ -1044,13 +911,12 @@ import {
   updateDoc,
   addDoc,
   onSnapshot
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================
+/* =====================================================
    FIREBASE CONFIG
-========================= */
+===================================================== */
 
 const firebaseConfig = {
 
@@ -1078,101 +944,109 @@ const firebaseConfig = {
 };
 
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-  getFirestore(app);
+const db = getFirestore(app);
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+===================================================== */
+
+let currentRole = "student";
+let currentUser = null;
 
 let students = [];
 let duties = [];
 let requests = [];
 let histories = [];
 
-let selectedRole = "student";
-let currentUser = null;
 
+/* =====================================================
+   SELECT ROLE
+===================================================== */
 
-/* =========================
-   STATUS
-========================= */
+function selectRole(role){
 
-document.getElementById(
-  "firebaseStatus"
-).textContent =
-  "🟢 Firebase เชื่อมต่อแล้ว";
-
-document.getElementById(
-  "loginFirebaseStatus"
-).textContent =
-  "🟢 Firebase เชื่อมต่อแล้ว";
-
-
-/* =========================
-   DATE
-========================= */
-
-function dateString(date){
-
-  const y =
-    date.getFullYear();
-
-  const m =
-    String(date.getMonth()+1)
-      .padStart(2,"0");
-
-  const d =
-    String(date.getDate())
-      .padStart(2,"0");
-
-  return `${y}-${m}-${d}`;
-
-}
-
-
-/* =========================
-   REGISTER
-========================= */
-
-function openRegister(){
+  currentRole = role;
 
   document
-    .getElementById("registerModal")
-    .classList.remove("hidden");
+    .querySelectorAll(".role-btn")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  if(role === "student"){
+
+    document
+      .getElementById("studentRole")
+      .classList.add("active");
+
+    document
+      .getElementById("usernameLabel")
+      .textContent = "รหัสนักเรียน";
+
+    document
+      .getElementById("username")
+      .placeholder = "เช่น 65001";
+
+  }
+
+  if(role === "leader"){
+
+    document
+      .getElementById("leaderRole")
+      .classList.add("active");
+
+    document
+      .getElementById("usernameLabel")
+      .textContent = "ชื่อผู้ใช้";
+
+    document
+      .getElementById("username")
+      .placeholder = "leader";
+
+  }
+
+  if(role === "teacher"){
+
+    document
+      .getElementById("teacherRole")
+      .classList.add("active");
+
+    document
+      .getElementById("usernameLabel")
+      .textContent = "ชื่อผู้ใช้";
+
+    document
+      .getElementById("username")
+      .placeholder = "teacher";
+
+  }
 
 }
 
 
-function closeRegister(){
+/* =====================================================
+   LOGIN
+===================================================== */
 
-  document
-    .getElementById("registerModal")
-    .classList.add("hidden");
+async function login(){
 
-}
-
-
-async function registerStudent(){
-
-  const id =
-    document.getElementById("regId")
-      .value.trim();
-
-  const name =
-    document.getElementById("regName")
-      .value.trim();
+  const username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("regPassword")
-      .value.trim();
+    document
+      .getElementById("password")
+      .value
+      .trim();
 
 
-  if(!id || !name || !password){
+  if(!username || !password){
 
     alert("กรุณากรอกข้อมูลให้ครบ");
 
@@ -1181,24 +1055,256 @@ async function registerStudent(){
   }
 
 
-  if(password.length < 4){
+  try{
 
-    alert("รหัสผ่านต้องมีอย่างน้อย 4 ตัว");
+    if(currentRole === "student"){
+
+      const snap =
+        await getDocs(
+          collection(db,"students")
+        );
+
+      const list =
+        snap.docs.map(
+          d => ({
+            ...d.data(),
+            docId:d.id
+          })
+        );
+
+      const student =
+        list.find(
+          s =>
+            String(s.id) === username &&
+            String(s.password) === password
+        );
+
+
+      if(!student){
+
+        alert("รหัสนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+
+        return;
+
+      }
+
+
+      currentUser = student;
+
+    }
+
+
+    if(currentRole === "leader"){
+
+      if(
+        username !== "leader" ||
+        password !== "1234"
+      ){
+
+        alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+
+        return;
+
+      }
+
+      currentUser = {
+        id:"leader",
+        name:"หัวหน้าเวร"
+      };
+
+    }
+
+
+    if(currentRole === "teacher"){
+
+      if(
+        username !== "teacher" ||
+        password !== "1234"
+      ){
+
+        alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+
+        return;
+
+      }
+
+      currentUser = {
+        id:"teacher",
+        name:"คุณครู"
+      };
+
+    }
+
+
+    document
+      .getElementById("loginPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("appPage")
+      .classList.remove("hidden");
+
+
+    document
+      .getElementById("currentUserName")
+      .textContent =
+      currentUser.name;
+
+
+    renderAll();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "เข้าสู่ระบบไม่สำเร็จ\n\n" +
+      error.code +
+      "\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+  currentUser = null;
+
+  document
+    .getElementById("appPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("username")
+    .value = "";
+
+  document
+    .getElementById("password")
+    .value = "";
+
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+function showPage(pageId,button){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      page =>
+        page.classList.remove("active")
+    );
+
+
+  const page =
+    document.getElementById(pageId);
+
+  if(page){
+
+    page.classList.add("active");
+
+  }
+
+
+  if(button){
+
+    document
+      .querySelectorAll(".menu-btn")
+      .forEach(
+        b =>
+          b.classList.remove("active")
+      );
+
+    button.classList.add("active");
+
+  }
+
+
+  renderAll();
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function statusText(status){
+
+  if(status === "done")
+    return `<span class="status status-done">✓ ทำแล้ว</span>`;
+
+  if(status === "notdone")
+    return `<span class="status status-notdone">✗ ไม่ทำ</span>`;
+
+  if(status === "leave")
+    return `<span class="status status-leave">📝 ลา</span>`;
+
+  return `<span class="status status-waiting">⏳ รอตรวจ</span>`;
+
+}
+
+
+/* =====================================================
+   MARK DONE
+===================================================== */
+
+async function markDone(id){
+
+  if(
+    currentRole !== "leader" &&
+    currentRole !== "teacher"
+  ){
+
+    alert("เฉพาะหัวหน้าเวรหรือครูเท่านั้น");
 
     return;
 
   }
 
 
-  const existing =
-    students.find(
-      s => String(s.id) === id
+  const duty =
+    duties.find(
+      d => d.id === id
     );
 
 
-  if(existing){
+  if(!duty){
 
-    alert("รหัสนักเรียนนี้มีอยู่แล้ว");
+    alert("ไม่พบข้อมูลเวร");
+
+    return;
+
+  }
+
+
+  if(duty.status === "leave"){
+
+    alert("เวรนี้ได้รับอนุมัติให้ลาแล้ว");
+
+    return;
+
+  }
+
+
+  if(duty.status === "done"){
+
+    alert("เวรนี้ถูกตรวจว่าทำแล้ว");
 
     return;
 
@@ -1207,150 +1313,25 @@ async function registerStudent(){
 
   try{
 
-    await setDoc(
-      doc(db,"students",id),
+    await updateDoc(
+      doc(db,"duties",id),
       {
-        id:id,
-        name:name,
-        password:password,
-        score:100,
-        createdAt:new Date().toISOString()
+        status:"done",
+        approved:true
       }
     );
 
 
-    alert(
-      "สมัครสมาชิกสำเร็จ 🎉\nสามารถเข้าสู่ระบบได้ทันที"
-    );
-
-
-    document.getElementById("regId").value = "";
-    document.getElementById("regName").value = "";
-    document.getElementById("regPassword").value = "";
-
-    closeRegister();
-
-
-    document.getElementById("username").value =
-      id;
-
-    document.getElementById("password").value =
-      password;
-
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "สมัครสมาชิกไม่สำเร็จ\nตรวจสอบ Firebase Rules"
-    );
-
-  }
-
-}
-
-
-/* =========================
-   SEED
-========================= */
-
-async function seedIfEmpty(){
-
-  const studentSnap =
-    await getDocs(
-      collection(db,"students")
-    );
-
-
-  if(studentSnap.empty){
-
-    const seedStudents = [
-
+    await addDoc(
+      collection(db,"history"),
       {
-        id:"65001",
-        name:"รัชชานนท์",
-        password:"1234",
-        score:100
-      },
-
-      {
-        id:"65002",
-        name:"นักเรียน 02",
-        password:"1234",
-        score:100
-      },
-
-      {
-        id:"65003",
-        name:"นักเรียน 03",
-        password:"1234",
-        score:100
+        text:
+          `ตรวจเวร: ${duty.studentName || duty.studentId} ทำเวรเรียบร้อย ✓`,
+        createdAt:
+          new Date().toISOString()
       }
-
-    ];
-
-
-    for(
-      const student
-      of seedStudents
-    ){
-
-      await setDoc(
-        doc(
-          db,
-          "students",
-          student.id
-        ),
-        student
-      );
-
-    }
-
-  }
-
-
-  const dutySnap =
-    await getDocs(
-      collection(db,"duties")
     );
 
 
-  if(dutySnap.empty){
-
-    const names =
-      ["65001","65002","65003"];
-
-    const today =
-      new Date();
-
-
-    for(let i=0;i<30;i++){
-
-      const date =
-        new Date(today);
-
-      date.setDate(
-        today.getDate()+i
-      );
-
-
-      const dateText =
-        dateString(date);
-
-
-      const studentA =
-        names[
-          (i*2) %
-          names.length
-        ];
-
-
-      const studentB =
-        names[
-          (i*2+1) %
-          names.length
-        ];
-
-
-      const dut
+    alert("บันทึกว่าทำเวรแล้ว ✓");
+  
